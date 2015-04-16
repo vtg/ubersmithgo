@@ -16,7 +16,7 @@ import (
 )
 
 // Request convenient way to define map[string]string
-type Request map[string]string
+type Request map[string]interface{}
 
 // API client structure
 type API struct {

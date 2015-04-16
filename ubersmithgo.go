@@ -156,8 +156,8 @@ func (r *Response) Key(key string) interface{} {
 //	})
 //	cl := client{}
 //	r.Load(&cl)
-func (r *Response) Load(i interface{}) {
-	json.Unmarshal(r.RawData, &i)
+func (r *Response) Load(i interface{}) error {
+	return json.Unmarshal(r.RawData, &i)
 }
 
 func toInt(num string) int {

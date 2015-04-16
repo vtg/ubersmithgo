@@ -4,6 +4,7 @@
 package ubersmithgo
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/json"
 	"io/ioutil"
@@ -52,15 +53,14 @@ func (a *API) Call(method string, params Request) *Response {
 
 	data := make(url.Values)
 	data.Set("method", method)
-	for k, v := range params {
-		data.Set(k, v)
-	}
 
 	pageURL := a.Host + "?" + data.Encode()
+	body, err := json.Marshal(params)
 
-	req, err := http.NewRequest("POST", pageURL, nil)
+	req, err := http.NewRequest("POST", pageURL, bytes.NewBuffer(body))
 
 	a.debug("[API REQUEST]: " + pageURL)
+	a.debug("[API REQUEST DATA]: " + string(body))
 
 	if err != nil {
 		r.Status = false
